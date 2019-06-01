@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-import Nav from '../components/Nav.js'
-import SearchBar from '../components/SearchBar'
+import SearchBarIndex from '../components/SearchBarIndex'
 import CachueloContent from '../containers/CachueloContent.js'
 import img from "../img/profesionistas.jpg"
 import axios from 'axios'
-import firebase from 'firebase'
-import { Link } from 'react-router-dom'
-import  firebaseConfig from '../firebase/config.js'
+
+// import firebase from 'firebase'
+// import { Link } from 'react-router-dom'
+// import  firebaseConfig from '../firebase/Config.js'
 
 export default class Index extends Component {
 
@@ -29,12 +29,15 @@ export default class Index extends Component {
 
   render() {
     return (
-      <div>
-        <Nav/>
-        <div style={{justifyContent: "center", display: "flex", backgroundColor:"#ffffff"}}>
-          <img src={img}/>
+      <div>        
+        <div style={{display: "flex", backgroundColor:"#ffffff"}}>
+          <img width="50%" height="59%" src={img}/>
+          <div style={{}}>
+            <h2 style={{marginTop: "10%", textAlign:"center"}}>Cachuelitos</h2>
+            <h2 >Consigue más rápido tus trabajos con nosotros</h2>
+          </div>
         </div>        
-        <SearchBar/>
+        <SearchBarIndex/>
         <CachueloContent data={this.state.series}/>
       </div>
     )
