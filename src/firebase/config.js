@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+
 import firebase from 'firebase'
-// import { Link } from 'react-router-dom'
-// import MenuAppBar from '../components/navbar/MenuAppBar'
+import axios from 'axios'
 
 import SimpleMenu from '../components/navbar/SimpleMenu'
 
@@ -14,16 +14,99 @@ export default class Config extends Component {
         this.state = {          
           pos: null, 
           user: null,
-          link: null
+          link: null,
+          usuarios: [],
+          usuario_logeado: [],
+          id_firebase: '',
+          id_api:'',
+          nombre: '',
+          email: ''
         };
         this.handleAuth = this.handleAuth.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.registrarUsuario = this.registrarUsuario.bind(this);
+        this.guardarIdUsuario = this.guardarIdUsuario.bind(this);
     }
 
     componentWillMount() {
-        firebase.auth().onAuthStateChanged(user =>{
+
+        axios.get('https://service-project.herokuapp.com/api/usuarios')
+        .then(res => {
+          this.setState({ usuarios: res.data })
+
+          firebase.auth().onAuthStateChanged(user =>{
             this.setState({user});
+          });
+
         });
+    }
+
+    registrarUsuario() {            
+
+      let datos = {
+        "idFirebase": this.state.user.uid,
+        "nombreUsuario": this.state.user.displayName,
+        "emailUsuario": this.state.user.email,
+      }
+
+      new Promise((resolve, reject) => {
+        let usuarios_existentes = 0
+
+        this.state.usuarios.forEach(usuario => {
+            
+            if(usuario.idFirebase === this.state.user.uid) {
+              usuarios_existentes += 1
+            }
+            console.log('API: '+usuario.idFirebase)
+            console.log('Firebase: '+this.state.user.uid)
+        })
+
+        resolve(usuarios_existentes)
+      })
+      .then((usuarios_existentes) => {
+
+        console.log('Hay '+usuarios_existentes+' usuarios con el mismo idFirebase')
+
+        if(usuarios_existentes < 1) { // Nuevo usuario
+            console.log('Insertando usuario')
+            axios.post('https://service-project.herokuapp.com/api/usuario/', datos)
+                .then(res => {
+                    this.state.usuarios.push(res.data);
+                    this.state.usuario_logeado.push(res.data);
+                    console.log(res.data)
+
+                }).catch((error)=>{
+                    console.log(error.toString());
+            });
+
+            // return "Bienvenio "+ this.state.user.displayName
+        }
+        else {            
+            // return "Hola de nuevo "+ this.state.user.displayName
+          
+          // this.state.usuarios.forEach(usuario => {
+            
+          //   if(usuario.idFirebase === this.state.user.uid) {
+                
+          //       // this.setState({id_api: usuario.idUsuario})
+          //   }            
+          // })
+          
+        }
+
+      })
+      
+    }
+
+    guardarIdUsuario() {
+      let idUsuario
+
+      this.state.usuarios.forEach(usuario => {          
+        if(usuario.idFirebase === this.state.user.uid) {                      
+            idUsuario = usuario.idUsuario
+        }
+      })
+      return idUsuario
     }
 
     handleAuth() {
@@ -40,36 +123,24 @@ export default class Config extends Component {
         .catch(error => console.log(`Error ${error.code}: ${error.message}`));
     }
 
-    showProfile(user) {   
+    showProfile(user, idUsuario) {   
       let photoURL = user.photoURL.split("https://").join('')
       let photo = photoURL.split('/')
-      // let count = this.deleteAndCount(photo)
-      return `profile/profileInformation/${user.uid}/${user.displayName}/${user.email}/${photo}`;  
+      // return `profile/profileInformation/${user.uid}/${user.displayName}/${user.email}/${photo}`;
+      return `profile/profileInformation/${idUsuario}/${photo}`;  
     }
 
-    // deleteAndCount(photo) {
-    //   let count = []
-    //   photo.forEach(el => {
-    //     count.push(el.length)
-    //   });
-    //   return count
-    // }
-
-  imprimir(user) {
-    console.log(user)
-  }
-
-    renderLoginButton(){
+  renderLoginButton(){
       if(this.state.user){
+
+        this.registrarUsuario()
+        let idUsuario = this.guardarIdUsuario()
+
         return(
-          <div>
-            <SimpleMenu showProfile={this.showProfile(this.state.user)} handleLogout={this.handleLogout} photo={this.state.user.photoURL} />
-            {/* <MenuAppBar showProfile={this.showProfile(this.state.user)} handleLogout={this.handleLogout} photo={this.state.user.photoURL}/> */}
-            {/* <Button style={{marginRight:"15px"}} color="primary" variant="contained" onClick={this.handleLogout}>Salir</Button> */}
-            {/* <Link onClick={()=>this.imprimir(this.state.user)} to={this.showProfile(this.state.user)}><img style={{borderRadius:"30px"}} width="50" src={this.state.user.photoURL} alt={this.state.user.displayName}/></Link> */}
-            {/* <img style={{borderRadius:"30px"}} width="50" src={this.state.user.photoURL} alt={this.state.user.displayName}/> */}
-            {/* <Link to='profile/'><img style={{borderRadius:"30px"}} width="50" src={this.state.user.photoURL} alt={this.state.user.displayName}/></Link> */}
-            {/* <p>Hola {this.state.user.displayName}!</p> */}
+          <div>            
+            <SimpleMenu showProfile={this.showProfile(this.state.user, idUsuario)}
+                        handleLogout={this.handleLogout}
+                        photo={this.state.user.photoURL} />
           </div>
           );
       }else{

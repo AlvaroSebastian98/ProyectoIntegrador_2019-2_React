@@ -5,29 +5,57 @@ import CachueloContent from '../containers/CachueloContent.js'
 import img from "../img/profesionistas.jpg"
 import axios from 'axios'
 
-// import firebase from 'firebase'
-// import { Link } from 'react-router-dom'
-// import  firebaseConfig from '../firebase/Config.js'
+import firebase from 'firebase'
 
 export default class Index extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      series: [],
+      publicaciones: [],
       pos: null,
+      usuarios: [],
+      user: null
     };
+
+    this.guardarIdUsuario = this.guardarIdUsuario.bind(this);
   }
 
   componentWillMount() {
-    axios.get('http://127.0.0.1:8000/series')
+
+    axios.get('https://service-project.herokuapp.com/api/usuarios')
     .then(res => {
-      this.setState({ series: res.data })
+      this.setState({ usuarios: res.data })
+
+      firebase.auth().onAuthStateChanged(user =>{
+        this.setState({user});
+      });
+    });
+
+    axios.get('https://service-project.herokuapp.com/api/publicaciones')
+      .then(res => {
+        this.setState({ publicaciones: res.data })
     });
 
   }
 
+  guardarIdUsuario() {
+    let idUsuario
+
+    this.state.usuarios.forEach(usuario => {          
+      if(usuario.idFirebase === this.state.user.uid) {                      
+          idUsuario = usuario.idUsuario
+      }
+    })
+    return idUsuario
+  }
+
   render() {
+    let idUsuario
+    if(this.state.user){      
+      idUsuario = this.guardarIdUsuario()
+    }
+
     return (
       <div>        
         <div style={{display: "flex", backgroundColor:"#ffffff"}}>
@@ -37,8 +65,8 @@ export default class Index extends Component {
             <h2 >Consigue más rápido tus trabajos con nosotros</h2>
           </div>
         </div>        
-        <SearchBarIndex/>
-        <CachueloContent data={this.state.series}/>
+        <SearchBarIndex idUsuario={idUsuario}/>
+        <CachueloContent data={this.state.publicaciones}/>
       </div>
     )
   }

@@ -36,13 +36,12 @@ export default class Profile extends Component {
                   id={this.state.id} 
                   username={this.state.username}
                   email={this.state.email}/>
-            </div>            
+            </div>
           </div>
-          <div style={{float:"right", width:"70%", backgroundColor:"white"}}>            
-            {/* {this.state.username} */}                         
-            <Route path='/profile/profileInformation/:id/:username/:email' component={ ProfileInformation } />
-            {/* <Route path='/publicaciones' component={ Publicaciones } />
-            <Route path='/contratar' component={ ContratarFormulario } /> */}                        
+          <div style={{float:"right", width:"70%", backgroundColor:"white"}}>                        
+            {/* <Route path='/profile/profileInformation/:id/:username/:email' component={ ProfileInformation } /> */}
+            <Route path='/profile/profileInformation/:id/:photo' component={ ProfileInformation } />
+                        
           </div>
         </div> 
         {/* </div>  */}

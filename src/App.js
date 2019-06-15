@@ -19,12 +19,13 @@ class App extends Component {
       <div style={{backgroundColor: "#F1F3F1"}}>
         <Router>
           <MenuAppBar/>
-          <div style={{marginTop:"1%", marginBottom:"1%"}}></div>
+          <div style={{marginTop:"1%", marginBottom:"1%"}} />
           <Switch>
             <Route exact path='/' component={ Index } />
-            <Route name="profile/" path='/profile/profileInformation/:id/:username/:email/:photo' component={ Profile } />
-            <Route name="publicaciones/" path='/publicaciones' component={ Publicaciones } />
-            <Route name="contratar/" path='/contratar' component={ ContratarFormulario } />
+            {/* <Route name="profile/" path='/profile/profileInformation/:id/:username/:email/:photo' component={ Profile } /> */}
+            <Route name="profile/" path='/profile/profileInformation/:id/:photo' component={ Profile } />
+            <Route name="publicaciones/" path='/publicaciones/:id' component={ Publicaciones } />
+            <Route name="contratar/" path='/contratar/:id' component={ ContratarFormulario } />
           </Switch>
         </Router>  
       </div>

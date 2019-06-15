@@ -5,6 +5,7 @@ export default class SearchBar extends Component {
     render() {
         return (
             <div 
+                className="container"
                 style={{
                 padding:"1%",                          
                 marginBottom:"2%",

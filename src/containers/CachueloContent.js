@@ -2,15 +2,22 @@ import React, { Component } from 'react'
 
 import CachueloItem from '../components/CachueloItem.js'
 
-export default class CachueloContent extends Component {
-
-  
+export default class CachueloContent extends Component {  
 
   mostrar() {
     return(
       this.props.data.map(res => {
         return(
-          <CachueloItem name={res.name} oficio={res.category} info={res.release_date} />
+          // <CachueloItem name={res.name} oficio={res.category} info={res.release_date} />
+          <CachueloItem titulo={res.tituloPublicacion}
+                        descripcion={res.descripcionPublicacion}
+                        habilidades={res.habilidadesPublicacion}
+                        estado={res.estadoPublicacion}
+                        fecha={res.fechaPublicacion}
+                        usuario={res.usuario}
+                        distrito={res.distrito}                        
+                        oficio={res.oficio.idOficio}
+          />
         )
       })
     )
@@ -23,9 +30,16 @@ export default class CachueloContent extends Component {
       this.props.data.forEach((res) => {
           let filter = this.props.filter
 
-          if(res.name.toLowerCase().indexOf(filter) > -1) {
-              rows.push(<CachueloItem name={res.name} oficio={res.category} 
-                info={res.release_date} />)
+          if(res.oficio.nombreOficio.toLowerCase().indexOf(filter) > -1) {
+              rows.push(<CachueloItem titulo={res.tituloPublicacion}
+                                      descripcion={res.descripcionPublicacion}
+                                      habilidades={res.habilidadesPublicacion}
+                                      estado={res.estadoPublicacion}
+                                      fecha={res.fechaPublicacion}
+                                      usuario={res.usuario}
+                                      distrito={res.distrito}                        
+                                      oficio={res.oficio} 
+              />)
           }
       })
 
@@ -33,8 +47,15 @@ export default class CachueloContent extends Component {
 
         this.props.data.forEach((res) => {
             console.log(res)
-            rows.push(<CachueloItem name={res.name} oficio={res.category} 
-              info={res.release_date} />)            
+            rows.push(<CachueloItem titulo={res.tituloPublicacion}
+                                    descripcion={res.descripcionPublicacion}
+                                    habilidades={res.habilidadesPublicacion}
+                                    estado={res.estadoPublicacion}
+                                    fecha={res.fechaPublicacion}
+                                    usuario={res.usuario}
+                                    distrito={res.distrito}                        
+                                    oficio={res.oficio}
+             />)            
         })
 
     } else {

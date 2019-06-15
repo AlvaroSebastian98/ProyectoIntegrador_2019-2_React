@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 
 export default class SearchBarIndex extends Component {
+
   render() {
     return (
       <div className="gradient"
@@ -16,10 +17,10 @@ export default class SearchBarIndex extends Component {
         <div style={{width:"100%"}}>
           <form className="form-inline padre" >
             <div className="form-group mb-2 hijo">
-              <Link to='publicaciones'><Button style={{marginRight:"15px"}} color="secondary" variant="contained" onClick={this.handleLogout}>Buscar trabajo</Button></Link>
+              <Link to={`publicaciones/${this.props.idUsuario}`}><Button style={{marginRight:"15px"}} color="secondary" variant="contained" onClick={this.handleLogout}>Buscar trabajo</Button></Link>
             </div>
             <div class="form-group mx-sm-3 mb-2 hijo">
-              <Link><Button style={{marginRight:"15px"}} color="secondary" variant="contained" onClick={this.handleLogout}>Contratar</Button></Link>
+              <Link to={`contratar/${this.props.idUsuario}`}><Button style={{marginRight:"15px"}} color="secondary" variant="contained" onClick={this.handleLogout}>Contratar</Button></Link>
             </div>                     
           </form>
         </div>

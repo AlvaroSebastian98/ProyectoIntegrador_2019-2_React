@@ -11,16 +11,17 @@ export default class Publicaciones extends Component {
     constructor(props) {
         super(props)
         this.state = {
-          series: [],
+          publicaciones: [],
           pos: null,
           filter: null
         };
     }
     
     componentWillMount() {
-        axios.get('http://127.0.0.1:8000/series')
+
+        axios.get('https://service-project.herokuapp.com/api/publicaciones')
         .then(res => {
-          this.setState({ series: res.data })
+          this.setState({ publicaciones: res.data })
         });
     
     }
@@ -34,9 +35,9 @@ export default class Publicaciones extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{height:"1000px"}}>
                <SearchBar onChange={ this.filterList.bind(this) }/>
-               <CachueloContent filter={ this.state.filter } data={this.state.series}/>
+               <CachueloContent filter={ this.state.filter } data={this.state.publicaciones}/>
             </div>
         )
     }
