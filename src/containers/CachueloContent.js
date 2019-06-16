@@ -4,6 +4,10 @@ import CachueloItem from '../components/CachueloItem.js'
 
 export default class CachueloContent extends Component {  
 
+  constructor(props){
+    super(props)
+  }
+
   mostrar() {
     return(
       this.props.data.map(res => {
@@ -17,6 +21,7 @@ export default class CachueloContent extends Component {
                         usuario={res.usuario}
                         distrito={res.distrito}                        
                         oficio={res.oficio.idOficio}
+                        idUsuarioActual={this.props.idUsuario}
           />
         )
       })
@@ -38,7 +43,8 @@ export default class CachueloContent extends Component {
                                       fecha={res.fechaPublicacion}
                                       usuario={res.usuario}
                                       distrito={res.distrito}                        
-                                      oficio={res.oficio} 
+                                      oficio={res.oficio}
+                                      idUsuarioActual={this.props.idUsuario}
               />)
           }
       })
@@ -55,6 +61,7 @@ export default class CachueloContent extends Component {
                                     usuario={res.usuario}
                                     distrito={res.distrito}                        
                                     oficio={res.oficio}
+                                    idUsuarioActual={this.props.idUsuario}
              />)            
         })
 

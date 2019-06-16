@@ -4,8 +4,59 @@ import '../styles/style.css'
 import 'bootstrap/dist/css/bootstrap.css';
 
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 export default class CachueloItem extends Component {
+
+  constructor(props) {
+    super(props)
+    this.renderButtonOrText = this.renderButtonOrText.bind(this)
+  }
+
+  renderButtonOrText() {
+    if(this.props.usuario.idUsuario != this.props.idUsuarioActual) {
+      return(
+        <div>
+          <strong><p className="card-text">Cotizar: </p></strong>
+          <TextField
+            id="standard-name"
+            label="Cotizar"
+            autoComplete="off"
+          />
+          <strong><p className="card-text">Detalles: </p></strong>
+          <TextField
+            id="standard-name"
+            label="Detalles"
+            autoComplete="off"
+          />
+        </div>
+      )      
+    }
+    else {
+      return(
+        <div>
+          <Button 
+            color="primary" 
+            variant="contained"
+            style={{marginTop:"16%"}}
+            // onClick={this.publicar}
+          >
+            Ver trabajadores
+          </Button>
+          <br />
+          <Button 
+            color="primary" 
+            variant="contained"
+            style={{marginTop:"16%"}}
+            // onClick={this.publicar}
+            >
+              Terminar publicación
+          </Button>
+        </div>        
+      )
+    }
+  }
+
   render() {
     return (
       <div className="card mb-3 container" style={{width:"90%", marginTop:"3%", padding:"2%"}} >
@@ -23,18 +74,9 @@ export default class CachueloItem extends Component {
               <strong><p className="card-text">Habilidades: </p></strong>
               <p className="card-text">{this.props.habilidades}</p>
               <p className="card-text"><strong>Fecha: </strong>{this.props.fecha}<small class="text-muted"></small></p>
-              <strong><p className="card-text">Cotizar: </p></strong>
-              <TextField
-                id="standard-name"
-                label="Cotizar"
-                autoComplete="off"
-              />
-              <strong><p className="card-text">Detalles: </p></strong>
-              <TextField
-                id="standard-name"
-                label="Detalles"
-                autoComplete="off"
-              />
+              
+              {this.renderButtonOrText()}
+              
             </div>
           </div>
           <div className="col-md-8">

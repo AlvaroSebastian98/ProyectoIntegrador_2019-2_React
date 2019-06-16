@@ -23,7 +23,7 @@ function TypographyMenu(props) {
   return (
     <Paper className={classes.root}>
       <MenuList>
-        <Link to={`/profile/profileInformation/${props.id}/${props.username}/`}>
+        <Link to={`/profile/profileInformation/${props.id}`}>
           <MenuItem>
             <ListItemIcon>            
               <AccountCircle />
@@ -31,7 +31,7 @@ function TypographyMenu(props) {
             <Typography variant="inherit">Información personal</Typography>
           </MenuItem>
         </Link>
-        <Link to={`/profile/publications/${props.id}/`}>
+        <Link to={`/profile/profilePublications/${props.id}`}>
           <MenuItem>
             <ListItemIcon>
               <SendIcon />
@@ -39,7 +39,7 @@ function TypographyMenu(props) {
             <Typography variant="inherit">Mis publicaciones</Typography>
           </MenuItem>
         </Link>
-        <Link to={`/profile/clients/${props.id}/`}>
+        <Link to={`/profile/profileClients/${props.id}`}>
           <MenuItem>
             <ListItemIcon>
               <AccessibilityNew />

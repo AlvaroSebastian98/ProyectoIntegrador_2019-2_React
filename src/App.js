@@ -23,7 +23,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={ Index } />
             {/* <Route name="profile/" path='/profile/profileInformation/:id/:username/:email/:photo' component={ Profile } /> */}
-            <Route name="profile/" path='/profile/profileInformation/:id/:photo' component={ Profile } />
+            <Route name="profile/" path='/profile/profileInformation/:id' component={ Profile } />
             <Route name="publicaciones/" path='/publicaciones/:id' component={ Publicaciones } />
             <Route name="contratar/" path='/contratar/:id' component={ ContratarFormulario } />
           </Switch>

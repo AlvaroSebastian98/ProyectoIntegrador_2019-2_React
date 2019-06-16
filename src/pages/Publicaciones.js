@@ -13,11 +13,15 @@ export default class Publicaciones extends Component {
         this.state = {
           publicaciones: [],
           pos: null,
-          filter: null
+          filter: null,
+          idUsuario: ''
         };
     }
     
     componentWillMount() {
+
+        const { params } = this.props.match
+        this.setState({idUsuario: params.id})
 
         axios.get('https://service-project.herokuapp.com/api/publicaciones')
         .then(res => {
@@ -37,7 +41,9 @@ export default class Publicaciones extends Component {
         return (
             <div style={{height:"1000px"}}>
                <SearchBar onChange={ this.filterList.bind(this) }/>
-               <CachueloContent filter={ this.state.filter } data={this.state.publicaciones}/>
+               <CachueloContent idUsuario={this.state.idUsuario} 
+                                filter={ this.state.filter }
+                                data={this.state.publicaciones}/>
             </div>
         )
     }

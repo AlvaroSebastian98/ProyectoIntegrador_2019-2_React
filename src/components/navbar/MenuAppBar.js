@@ -56,6 +56,19 @@ class MenuAppBar extends Component {
       "idFirebase": this.state.user.uid,
       "nombreUsuario": this.state.user.displayName,
       "emailUsuario": this.state.user.email,
+      "fotoUsuario":this.state.user.photoURL,
+      "distrito": {
+        "idDistrito": 1,
+      },
+      "oficio1": {
+        "idOficio": 1,
+      },
+      "oficio2": {
+        "idOficio": 1,
+      },
+      "oficio3": {
+        "idOficio": 1,
+      },
     }
 
     new Promise((resolve, reject) => {
@@ -130,7 +143,8 @@ class MenuAppBar extends Component {
     let photoURL = user.photoURL.split("https://").join('')
     let photo = photoURL.split('/')
     // return `profile/profileInformation/${user.uid}/${user.displayName}/${user.email}/${photo}`;
-    return `/profile/profileInformation/${idUsuario}/${photo}`;  
+    // return `/profile/profileInformation/${idUsuario}/${photo}`;
+    return `/profile/profileInformation/${idUsuario}`;
   }
 
   renderLoginButton(){

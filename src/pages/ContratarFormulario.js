@@ -12,6 +12,7 @@ export default class ContratarFormulario extends Component {
     super(props)
     this.state = ({
       distritos: [],
+      oficios: [],
       id_usuario:'',      
       titulo:'',
       telefono:'',
@@ -41,6 +42,11 @@ export default class ContratarFormulario extends Component {
     axios.get('https://service-project.herokuapp.com/api/distritos')
       .then(res => {
         this.setState({ distritos: res.data })
+    });
+
+    axios.get('https://service-project.herokuapp.com/api/oficios')
+      .then(res => {
+        this.setState({ oficios: res.data })
     });
 
   }
@@ -85,7 +91,7 @@ export default class ContratarFormulario extends Component {
   publicar(e) {
     e.preventDefault();
 
-    let d = new Date();
+    // let d = new Date();
 
     let datos = {
       "tituloPublicacion": this.state.titulo,
@@ -113,7 +119,8 @@ export default class ContratarFormulario extends Component {
       .then(res => {
           this.state.usuario_logeado = res.data;
           console.log(res.data)
-          // this.setState( {          
+          window.location="/";
+          // this.setState( {
           // });
       }).catch((error)=>{
           console.log(error.toString());
@@ -157,9 +164,9 @@ export default class ContratarFormulario extends Component {
             margin="normal"
             style={{marginRight:"5%", width:"45%"}}
           >
-            {this.state.distritos.map(distrito => (
-              <MenuItem key={distrito.idDistrito} value={distrito.idDistrito}>
-                {distrito.nombreDistrito}
+            {this.state.oficios.map(oficio => (
+              <MenuItem key={oficio.idOficio} value={oficio.idOficio}>
+                {oficio.nombreOficio}
               </MenuItem>
             ))}
           </TextField>

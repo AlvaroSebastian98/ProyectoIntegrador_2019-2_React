@@ -3,8 +3,11 @@ import React, { Component } from 'react'
 
 import TypographyMenu from '../components/TypographyMenu'
 import ProfileInformation from '../components/profile/ProfileInformation'
+import ProfilePublications from '../components/profile/ProfilePublications'
 
 import { BrowserRouter as Router, Route, IndexRouter, hashHistory} from 'react-router-dom';
+
+import axios from 'axios'
 
 export default class Profile extends Component {
 
@@ -15,11 +18,20 @@ export default class Profile extends Component {
       id: params.id,
       username: params.username,
       email: params.email,
-      photo: "https://"+params.photo.replace(/,/g,"/")
+      // photo: "https://"+params.photo.replace(/,/g,"/")
+      photo: ''
     }
   }
 
-  render() {    
+  componentWillMount() {    
+    axios.get('https://service-project.herokuapp.com/api/usuario/'+this.state.id)
+        .then(res => {
+          this.setState({ photo: res.data.fotoUsuario })
+          console.log(res.data)
+    });
+  }
+
+  render() {
     console.log(this.state.id)
     console.log(this.state.username)
     console.log(this.state.email)
@@ -32,7 +44,7 @@ export default class Profile extends Component {
           <div style={{float:"left", width:"25%", backgroundColor:"white", textAlign:"center"}}>
             <img style={{marginTop:"40px"}} width="220" src={this.state.photo}/>
             <div style={{marginLeft:"45px", marginTop:"50px"}}>
-              <TypographyMenu 
+              <TypographyMenu
                   id={this.state.id} 
                   username={this.state.username}
                   email={this.state.email}/>
@@ -40,7 +52,9 @@ export default class Profile extends Component {
           </div>
           <div style={{float:"right", width:"70%", backgroundColor:"white"}}>                        
             {/* <Route path='/profile/profileInformation/:id/:username/:email' component={ ProfileInformation } /> */}
-            <Route path='/profile/profileInformation/:id/:photo' component={ ProfileInformation } />
+            <Route path='/profile/profileInformation/:id' component={ ProfileInformation } />
+            <Route path='/profile/profilePublications/:id' component={ ProfilePublications } />
+            <Route path='/profile/profileClients/:id' component={ ProfileInformation } />
                         
           </div>
         </div> 
