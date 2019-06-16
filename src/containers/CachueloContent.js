@@ -13,7 +13,8 @@ export default class CachueloContent extends Component {
       this.props.data.map(res => {
         return(
           // <CachueloItem name={res.name} oficio={res.category} info={res.release_date} />
-          <CachueloItem titulo={res.tituloPublicacion}
+          <CachueloItem idPublicacion={res.idPublicacion}
+                        titulo={res.tituloPublicacion}
                         descripcion={res.descripcionPublicacion}
                         habilidades={res.habilidadesPublicacion}
                         estado={res.estadoPublicacion}
@@ -36,7 +37,8 @@ export default class CachueloContent extends Component {
           let filter = this.props.filter
 
           if(res.oficio.nombreOficio.toLowerCase().indexOf(filter) > -1) {
-              rows.push(<CachueloItem titulo={res.tituloPublicacion}
+              rows.push(<CachueloItem idPublicacion={res.idPublicacion}
+                                      titulo={res.tituloPublicacion}
                                       descripcion={res.descripcionPublicacion}
                                       habilidades={res.habilidadesPublicacion}
                                       estado={res.estadoPublicacion}
@@ -53,7 +55,8 @@ export default class CachueloContent extends Component {
 
         this.props.data.forEach((res) => {
             console.log(res)
-            rows.push(<CachueloItem titulo={res.tituloPublicacion}
+            rows.push(<CachueloItem idPublicacion={res.idPublicacion}
+                                    titulo={res.tituloPublicacion}
                                     descripcion={res.descripcionPublicacion}
                                     habilidades={res.habilidadesPublicacion}
                                     estado={res.estadoPublicacion}

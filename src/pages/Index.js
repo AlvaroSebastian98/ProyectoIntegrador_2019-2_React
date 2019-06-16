@@ -66,7 +66,7 @@ export default class Index extends Component {
           </div>
         </div>        
         <SearchBarIndex idUsuario={idUsuario}/>
-        <CachueloContent data={this.state.publicaciones}/>
+        <CachueloContent idUsuario={idUsuario} data={this.state.publicaciones}/>
       </div>
     )
   }

@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import TypographyMenu from '../components/TypographyMenu'
 import ProfileInformation from '../components/profile/ProfileInformation'
 import ProfilePublications from '../components/profile/ProfilePublications'
+import ProfileClients from '../components/profile/ProfileClients'
 
 import { BrowserRouter as Router, Route, IndexRouter, hashHistory} from 'react-router-dom';
 
@@ -54,7 +55,7 @@ export default class Profile extends Component {
             {/* <Route path='/profile/profileInformation/:id/:username/:email' component={ ProfileInformation } /> */}
             <Route path='/profile/profileInformation/:id' component={ ProfileInformation } />
             <Route path='/profile/profilePublications/:id' component={ ProfilePublications } />
-            <Route path='/profile/profileClients/:id' component={ ProfileInformation } />
+            <Route path='/profile/profileClients/:id' component={ ProfileClients } />
                         
           </div>
         </div> 

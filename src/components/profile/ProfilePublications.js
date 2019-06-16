@@ -39,7 +39,7 @@ export default class ProfilePublications extends Component {
 
         return (
             <div>
-                <CachueloContent data={publicaciones} />
+                <CachueloContent idUsuario={this.state.idUsuario} data={publicaciones} />
             </div>
         )
     }
