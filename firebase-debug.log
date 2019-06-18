@@ -1,0 +1,65 @@
+[debug] [2019-06-18T13:46:04.069Z] ----------------------------------------------------------------------
+[debug] [2019-06-18T13:46:04.071Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Álvaro\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-06-18T13:46:04.071Z] CLI Version:   7.0.0
+[debug] [2019-06-18T13:46:04.071Z] Platform:      win32
+[debug] [2019-06-18T13:46:04.071Z] Node Version:  v10.1.0
+[debug] [2019-06-18T13:46:04.072Z] Time:          Tue Jun 18 2019 08:46:04 GMT-0500 (Hora est. Pacífico, Sudamérica)
+[debug] [2019-06-18T13:46:04.072Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-06-18T13:46:04.084Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-06-18T13:46:04.084Z] > authorizing via signed-in user
+[debug] [2019-06-18T13:46:04.085Z] [iam] checking project app-cachuelitos-react for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-06-18T13:46:04.089Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/app-cachuelitos-react:testIamPermissions  
+
+[debug] [2019-06-18T13:46:04.791Z] <<< HTTP RESPONSE 200
+[debug] [2019-06-18T13:46:04.801Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/app-cachuelitos-react  
+ 
+[debug] [2019-06-18T13:46:05.593Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'app-cachuelitos-react'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-06-18T13:46:05.599Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/app-cachuelitos-react/versions  
+
+[debug] [2019-06-18T13:46:06.991Z] <<< HTTP RESPONSE 200
+[info] i  hosting[app-cachuelitos-react]: beginning deploy...
+[info] i  hosting[app-cachuelitos-react]: found 17 files in build
+[debug] [2019-06-18T13:46:07.095Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-06-18T13:46:08.179Z] [hosting] hash cache [YnVpbGQ] stored for 17 files
+[debug] [2019-06-18T13:46:08.180Z] [hosting][hash queue][FINAL]
+[debug] [2019-06-18T13:46:08.180Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/app-cachuelitos-react/versions/3f3f288c2d8fdbcb:populateFiles  
+ <request body omitted>
+[debug] [2019-06-18T13:46:09.160Z] <<< HTTP RESPONSE 200
+[debug] [2019-06-18T13:46:09.185Z] [hosting][populate queue][FINAL]
+[debug] [2019-06-18T13:46:09.185Z] [hosting] uploads queued: 8
+[debug] [2019-06-18T13:46:12.237Z] [hosting][upload queue][FINAL]
+[info] +  hosting[app-cachuelitos-react]: file upload complete
+[debug] [2019-06-18T13:46:12.241Z] [hosting] deploy completed after 5243ms
+[debug] [2019-06-18T13:46:33.325Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "app-cachuelitos-react"
+    },
+    "site": "app-cachuelitos-react",
+    "version": "sites/app-cachuelitos-react/versions/3f3f288c2d8fdbcb"
+  }
+]
+[info] i  hosting[app-cachuelitos-react]: finalizing version...
+[debug] [2019-06-18T13:46:33.328Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/app-cachuelitos-react/versions/3f3f288c2d8fdbcb?updateMask=status  
+
+[debug] [2019-06-18T13:46:33.348Z] Error: getaddrinfo ENOTFOUND firebasehosting.googleapis.com firebasehosting.googleapis.com:443
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:50:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND firebasehosting.googleapis.com firebasehosting.googleapis.com:443

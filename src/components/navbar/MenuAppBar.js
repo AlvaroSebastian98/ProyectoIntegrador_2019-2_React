@@ -93,9 +93,11 @@ class MenuAppBar extends Component {
           console.log('Insertando usuario')
           axios.post('https://service-project.herokuapp.com/api/usuario/', datos)
               .then(res => {
-                  this.state.usuarios.push(res.data);
+                  // this.state.usuarios.push(res.data);
                   this.state.usuario_logeado.push(res.data);
                   console.log(res.data)
+                  window.location.reload();
+                  
 
               }).catch((error)=>{
                   console.log(error.toString());
@@ -129,13 +131,19 @@ class MenuAppBar extends Component {
       const provider = new firebase.auth.GoogleAuthProvider();
 
       firebase.auth().signInWithPopup(provider)
-      .then(result => console.log(`${result.user.email} ha iniciado sesion`))
+      .then(result => {
+        console.log(`${result.user.email} ha iniciado sesion`)
+        
+      })
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
   handleLogout() {
       firebase.auth().signOut()
-      .then(result => console.log(`${result.user.email} ha  salido`))
+      .then(result => {
+        console.log(`Usuario ha  cerrado sesión`)
+        window.location='http://localhost:3000/';
+      })
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
@@ -149,7 +157,7 @@ class MenuAppBar extends Component {
 
   renderLoginButton(){
     if(this.state.user){
-
+      
       this.registrarUsuario()
       let idUsuario = this.guardarIdUsuario()
 
@@ -169,11 +177,12 @@ class MenuAppBar extends Component {
 
   render() {
     const { classes } = this.props;
-
+    
     let idUsuario
     if(this.state.user) {
       idUsuario = this.guardarIdUsuario()
-    }   
+    }
+    
 
     return (
       <div className={classes.root}>

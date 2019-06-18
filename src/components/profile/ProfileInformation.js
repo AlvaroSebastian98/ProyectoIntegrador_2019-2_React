@@ -276,7 +276,7 @@ export default class ProfileInformation extends Component {
                     <div className="form-group">
                         <label for="exampleFormControlSelect1">Distrito</label>
                         <select onChange={this.cambioDistrito} className="form-control" style={{width:"30%"}}>
-                            {this.state.distritos.map(distrito => { 
+                            {this.state.distritos.map(distrito => {
                                 if(this.state.id_distrito == distrito.idDistrito) {
                                     this.state.selectedDistrito = true
                                 } else {
@@ -293,8 +293,8 @@ export default class ProfileInformation extends Component {
                     </div>
                     <div className="form-group">
                         <label for="exampleFormControlSelect1">Número</label>
-                        <input onChange={this.cambioTelefono}
-                                value={this.state.telefono} type="text" className="form-control" style={{width:"30%"}}/>
+                        <input maxLength="9" onChange={this.cambioTelefono}
+                                value={this.state.telefono} type="number" className="form-control" style={{width:"30%"}}/>
                     </div>
                     <Button                            
                             style={{marginRight:"15px"}} 
@@ -307,7 +307,7 @@ export default class ProfileInformation extends Component {
                 </form>
                 <form style={{marginTop:"8%"}}>
                     <h4>¿Quieres trabajar?</h4>
-                    <br/>  
+                    <br/>
                     Deseo trabajar                                      
                     <Switch
                         checked={this.state.cb1}

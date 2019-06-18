@@ -39,14 +39,22 @@ function TypographyMenu(props) {
             <Typography variant="inherit">Mis publicaciones</Typography>
           </MenuItem>
         </Link>
-        <Link to={`/profile/profileClients/${props.id}`}>
+        <Link to={`/profile/profileOffers/${props.id}`}>
+          <MenuItem>
+            <ListItemIcon>
+              <AccessibilityNew />
+            </ListItemIcon> 
+            <Typography variant="inherit" noWrap>Clientes y ofertas</Typography>
+          </MenuItem>
+        </Link>
+        {/* <Link to={`/profile/profileClients/${props.id}`}>
           <MenuItem>
             <ListItemIcon>
               <AccessibilityNew />
             </ListItemIcon>
             <Typography variant="inherit" noWrap>Clientes</Typography>
           </MenuItem>
-        </Link>
+        </Link> */}
       </MenuList>
     </Paper>
   );

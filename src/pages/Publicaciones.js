@@ -12,6 +12,7 @@ export default class Publicaciones extends Component {
         super(props)
         this.state = {
           publicaciones: [],
+          ofertas: [],
           pos: null,
           filter: null,
           idUsuario: ''
@@ -27,6 +28,11 @@ export default class Publicaciones extends Component {
         .then(res => {
           this.setState({ publicaciones: res.data })
         });
+
+        axios.get('https://service-project.herokuapp.com/api/ofertas')
+            .then(res => {
+              this.setState({ ofertas: res.data })
+        });
     
     }
 
@@ -38,12 +44,28 @@ export default class Publicaciones extends Component {
     }
 
     render() {
+
+        let ofertas = []
+        let publicaciones = []
+
+        this.state.ofertas.forEach((oferta) => {
+            if(oferta.usuario.idUsuario != this.state.idUsuario) {
+                ofertas.push(oferta)
+            }
+        })
+        
+        this.state.publicaciones.forEach(publicacion => {
+            if(publicacion.disponibilidadPublicacion == true) {
+                publicaciones.push(publicacion)
+            }
+        })
+
         return (
             <div style={{height:"1000px"}}>
                <SearchBar onChange={ this.filterList.bind(this) }/>
                <CachueloContent idUsuario={this.state.idUsuario} 
                                 filter={ this.state.filter }
-                                data={this.state.publicaciones}/>
+                                data={publicaciones}/>
             </div>
         )
     }

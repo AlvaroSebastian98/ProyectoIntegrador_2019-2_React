@@ -52,12 +52,23 @@ export default class Index extends Component {
 
   render() {
     let idUsuario
-    if(this.state.user){      
-      idUsuario = this.guardarIdUsuario()
-    }
+
+    if(this.state.user != null) {
+      // if(this.state.user){      
+        idUsuario = this.guardarIdUsuario()
+      // }
+    }    
+
+    let publicaciones = []
+
+    this.state.publicaciones.forEach(publicacion => {
+      if(publicacion.disponibilidadPublicacion == true) {
+          publicaciones.push(publicacion)
+      }
+    })
 
     return (
-      <div>        
+      <div>
         <div style={{display: "flex", backgroundColor:"#ffffff"}}>
           <img width="50%" height="59%" src={img}/>
           <div style={{}}>
@@ -66,7 +77,7 @@ export default class Index extends Component {
           </div>
         </div>        
         <SearchBarIndex idUsuario={idUsuario}/>
-        <CachueloContent idUsuario={idUsuario} data={this.state.publicaciones}/>
+        <CachueloContent idUsuario={idUsuario} data={publicaciones}/>
       </div>
     )
   }

@@ -5,15 +5,18 @@ import CachueloItem from '../components/CachueloItem.js'
 export default class CachueloContent extends Component {  
 
   constructor(props){
-    super(props)
+    super(props)    
   }
+
+  
 
   mostrar() {
     return(
       this.props.data.map(res => {
         return(
           // <CachueloItem name={res.name} oficio={res.category} info={res.release_date} />
-          <CachueloItem idPublicacion={res.idPublicacion}
+          <CachueloItem key={res.idPublicacion}
+                        idPublicacion={res.idPublicacion}
                         titulo={res.tituloPublicacion}
                         descripcion={res.descripcionPublicacion}
                         habilidades={res.habilidadesPublicacion}
@@ -23,6 +26,7 @@ export default class CachueloContent extends Component {
                         distrito={res.distrito}                        
                         oficio={res.oficio.idOficio}
                         idUsuarioActual={this.props.idUsuario}
+                        ofertas={this.props.ofertas}
           />
         )
       })
@@ -37,16 +41,18 @@ export default class CachueloContent extends Component {
           let filter = this.props.filter
 
           if(res.oficio.nombreOficio.toLowerCase().indexOf(filter) > -1) {
-              rows.push(<CachueloItem idPublicacion={res.idPublicacion}
+              rows.push(<CachueloItem key={res.idPublicacion}
+                                      idPublicacion={res.idPublicacion}
                                       titulo={res.tituloPublicacion}
                                       descripcion={res.descripcionPublicacion}
                                       habilidades={res.habilidadesPublicacion}
                                       estado={res.estadoPublicacion}
                                       fecha={res.fechaPublicacion}
                                       usuario={res.usuario}
-                                      distrito={res.distrito}                        
+                                      distrito={res.distrito}
                                       oficio={res.oficio}
                                       idUsuarioActual={this.props.idUsuario}
+                                      ofertas={this.props.ofertas}
               />)
           }
       })
@@ -55,7 +61,8 @@ export default class CachueloContent extends Component {
 
         this.props.data.forEach((res) => {
             console.log(res)
-            rows.push(<CachueloItem idPublicacion={res.idPublicacion}
+            rows.push(<CachueloItem key={res.idPublicacion}
+                                    idPublicacion={res.idPublicacion}
                                     titulo={res.tituloPublicacion}
                                     descripcion={res.descripcionPublicacion}
                                     habilidades={res.habilidadesPublicacion}
@@ -65,6 +72,7 @@ export default class CachueloContent extends Component {
                                     distrito={res.distrito}                        
                                     oficio={res.oficio}
                                     idUsuarioActual={this.props.idUsuario}
+                                    ofertas={this.props.ofertas}
              />)            
         })
 

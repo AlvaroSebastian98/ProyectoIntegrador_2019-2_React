@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import axios from 'axios'
 
+import firebase from 'firebase'
+
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -13,13 +15,15 @@ export default class ContratarFormulario extends Component {
     this.state = ({
       distritos: [],
       oficios: [],
+      usuario:'',
       id_usuario:'',      
       titulo:'',
       telefono:'',
       oficio:'',
       distrito:'',
       habilidades:'',
-      descripcion:''
+      descripcion:'',
+      user: null,
     })
     
     this.cambioTitulo = this.cambioTitulo.bind(this);
@@ -47,6 +51,18 @@ export default class ContratarFormulario extends Component {
     axios.get('https://service-project.herokuapp.com/api/oficios')
       .then(res => {
         this.setState({ oficios: res.data })
+    });
+
+    axios.get('https://service-project.herokuapp.com/api/usuario/'+params.id)
+    .then(res => {
+      this.setState({         
+        usuario: res.data
+      })
+      console.log(res.data)
+
+      firebase.auth().onAuthStateChanged(user =>{
+        this.setState({user});
+      });
     });
 
   }
@@ -91,7 +107,13 @@ export default class ContratarFormulario extends Component {
   publicar(e) {
     e.preventDefault();
 
-    // let d = new Date();
+    let d = new Date();
+    
+    let fecha = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
+
+    let hora = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+
+    let dateTime = fecha + ' ' + hora
 
     let datos = {
       "tituloPublicacion": this.state.titulo,
@@ -100,9 +122,11 @@ export default class ContratarFormulario extends Component {
       "telefonoPublicacion": this.state.telefono,
       "habilidadesPublicacion": this.state.habilidades,
       "estadoPublicacion": true,
+      "disponibilidadPublicacion":true,
       //2010-01-12 10:50:43
       // "fechaPublicacion": `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} `+
-      //                     `${d.getHours()}:${d.getMinutes()}:${d.getMilliseconds()}`,      
+      //                     `${d.getHours()}:${d.getMinutes()}:${d.getMilliseconds()}`,
+      // "fechaPublicacion": dateTime,
       "usuario": {
         "idUsuario": this.state.id_usuario
       },
@@ -128,106 +152,115 @@ export default class ContratarFormulario extends Component {
   }
 
   render() {
-    return (
-      <div style={{height:"40em"}} fixed className="container">        
-        <form autoComplete="off">
-          <TextField
-            id="standard-name"
-            label="Título de la publicación"
-            value={this.state.titulo}
-            onChange={this.cambioTitulo}
-            margin="normal"
-            style={{marginRight:"5%", width:"45%"}}
-          />
-
-          <TextField
-            id="standard-name"
-            label="Teléfono"
-            value={this.state.telefono}
-            onChange={this.cambioTelefono}
-            margin="normal"
-            style={{width:"45%"}}
-          />
-          
-          <TextField
-            id="standard-select-currency"
-            select
-            label="Oficio"
-            value={this.state.oficio}
-            onChange={this.cambioOficio}
-            // SelectProps={{
-            //   MenuProps: {
-            //     className: classes.menu,
-            //   },
-            // }}
-            helperText="Elige el tipo de oficio requerido"
-            margin="normal"
-            style={{marginRight:"5%", width:"45%"}}
-          >
-            {this.state.oficios.map(oficio => (
-              <MenuItem key={oficio.idOficio} value={oficio.idOficio}>
-                {oficio.nombreOficio}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            id="standard-select-currency"
-            select
-            label="Distrito"
-            value={this.state.distrito}
-            onChange={this.cambioDistrito}
-            // SelectProps={{
-            //   MenuProps: {
-            //     // className: classes.menu,
-            //   },
-            // }}
-            helperText="Elige el distrito del trabajo"
-            margin="normal"
-            style={{width:"45%"}}
-            
-          >
-            {this.state.distritos.map(distrito => (
-              <MenuItem key={distrito.idDistrito} value={distrito.idDistrito}>
-                {distrito.nombreDistrito}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            id="standard-multiline-static"
-            label="Habilidades necesarias"
-            value={this.state.habilidades}
-            onChange={this.cambioHabilidades}
-            multiline
-            rows="4"
-            // defaultValue="Default Value"
-            margin="normal"
-            style={{marginRight:"5%", width:"45%"}}
-          />
-
-          <TextField
-            id="standard-multiline-static"
-            label="Descripción del cachuelo"
-            value={this.state.descripcion}
-            onChange={this.cambioDescripcion}
-            multiline
-            rows="4"
-            // defaultValue="Default Value"
-            margin="normal"
-            style={{width:"45%"}}
-          />
-
-          <Button 
-            color="primary" 
-            variant="contained"
-            style={{marginTop:"16%"}}
-            onClick={this.publicar}
-          >
-            Publicar
-          </Button>
-        </form>          
-      </div>
-    )
+    
+    if(this.state.user != null) {
+      if(this.state.user.uid == this.state.usuario.idFirebase) {
+        return (
+          <div style={{height:"40em"}} fixed className="container">        
+            <form autoComplete="off">
+              <TextField
+                id="standard-name"
+                label="Título de la publicación"
+                value={this.state.titulo}
+                onChange={this.cambioTitulo}
+                margin="normal"
+                style={{marginRight:"5%", width:"45%"}}
+              />
+    
+              <TextField
+                id="standard-name"
+                label="Teléfono"
+                value={this.state.telefono}
+                onChange={this.cambioTelefono}
+                margin="normal"
+                style={{width:"45%"}}
+              />
+              
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Oficio"
+                value={this.state.oficio}
+                onChange={this.cambioOficio}
+                // SelectProps={{
+                //   MenuProps: {
+                //     className: classes.menu,
+                //   },
+                // }}
+                helperText="Elige el tipo de oficio requerido"
+                margin="normal"
+                style={{marginRight:"5%", width:"45%"}}
+              >
+                {this.state.oficios.map(oficio => (
+                  <MenuItem key={oficio.idOficio} value={oficio.idOficio}>
+                    {oficio.nombreOficio}
+                  </MenuItem>
+                ))}
+              </TextField>
+    
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Distrito"
+                value={this.state.distrito}
+                onChange={this.cambioDistrito}
+                // SelectProps={{
+                //   MenuProps: {
+                //     // className: classes.menu,
+                //   },
+                // }}
+                helperText="Elige el distrito del trabajo"
+                margin="normal"
+                style={{width:"45%"}}
+                
+              >
+                {this.state.distritos.map(distrito => (
+                  <MenuItem key={distrito.idDistrito} value={distrito.idDistrito}>
+                    {distrito.nombreDistrito}
+                  </MenuItem>
+                ))}
+              </TextField>
+    
+              <TextField
+                id="standard-multiline-static"
+                label="Habilidades necesarias"
+                value={this.state.habilidades}
+                onChange={this.cambioHabilidades}
+                multiline
+                rows="4"
+                // defaultValue="Default Value"
+                margin="normal"
+                style={{marginRight:"5%", width:"45%"}}
+              />
+    
+              <TextField
+                id="standard-multiline-static"
+                label="Descripción del cachuelo"
+                value={this.state.descripcion}
+                onChange={this.cambioDescripcion}
+                multiline
+                rows="4"
+                // defaultValue="Default Value"
+                margin="normal"
+                style={{width:"45%"}}
+              />
+    
+              <Button 
+                color="primary" 
+                variant="contained"
+                style={{marginTop:"16%"}}
+                onClick={this.publicar}
+              >
+                Publicar
+              </Button>
+            </form>          
+          </div>
+        )
+      } else {
+        return(null)
+      }
+    } else {
+      return(null)
+    }    
   }
 }

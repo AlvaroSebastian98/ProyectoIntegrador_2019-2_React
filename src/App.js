@@ -24,6 +24,12 @@ class App extends Component {
             <Route exact path='/' component={ Index } />
             {/* <Route name="profile/" path='/profile/profileInformation/:id/:username/:email/:photo' component={ Profile } /> */}
             <Route name="profile/" path='/profile/profileInformation/:id' component={ Profile } />
+            <Route name="profile/" path='/profile/profilePublications/:id' component={ Profile } />
+            <Route name="profile/" path='/profile/profileOffers/:id' component={ Profile } />
+            <Route name="profile/" path='/profile/profileClients/:id' component={ Profile } />
+            <Route name="profile/" path='/profile/profileWorkers/:id' component={ Profile } />
+
+
             <Route name="publicaciones/" path='/publicaciones/:id' component={ Publicaciones } />
             <Route name="contratar/" path='/contratar/:id' component={ ContratarFormulario } />
           </Switch>

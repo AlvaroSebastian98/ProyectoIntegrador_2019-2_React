@@ -36,11 +36,17 @@ export default class ProfilePublications extends Component {
                 publicaciones.push(publicacion)
             }
         })
-
-        return (
-            <div>
-                <CachueloContent idUsuario={this.state.idUsuario} data={publicaciones} />
-            </div>
-        )
+        
+        if(publicaciones.length == 0) {
+            return(
+                <div style={{textAlign:"center", marginTop:"10%"}}>No tiene ninguna publicación</div>
+            )
+        } else {
+            return (
+                <div>
+                    <CachueloContent idUsuario={this.state.idUsuario} data={publicaciones} />
+                </div>
+            )
+        }        
     }
 }
